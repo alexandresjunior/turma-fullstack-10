@@ -15,60 +15,60 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.treina.recife.sgp.api.model.Projeto;
-import br.com.treina.recife.sgp.api.service.ProjetoService;
+import br.com.treina.recife.sgp.api.model.Tarefa;
+import br.com.treina.recife.sgp.api.service.TarefaService;
 
 @RestController
-@RequestMapping("/api/projetos")
-public class ProjetoController {
+@RequestMapping("/api/tarefas")
+public class TarefaController {
 
     @Autowired
-    private ProjetoService projetoService;
+    private TarefaService tarefaService;
 
     @PostMapping
-    public ResponseEntity<Projeto> cadastrar(@RequestBody Projeto projeto) {
+    public ResponseEntity<Tarefa> cadastrar(@RequestBody Tarefa tarefa) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(projetoService.cadastrarProjeto(projeto));
+                             .body(tarefaService.cadastrarTarefa(tarefa));
     }
 
     @GetMapping
-    public ResponseEntity<List<Projeto>> listar() {
-        return ResponseEntity.ok(projetoService.listarProjetos());
+    public ResponseEntity<List<Tarefa>> listar() {
+        return ResponseEntity.ok(tarefaService.listarTarefas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Projeto> obterDadosPeloId(@PathVariable Long id) {
-        Optional<Projeto> projeto = projetoService.obterDadosDoProjeto(id);
+    public ResponseEntity<Tarefa> obterDadosPeloId(@PathVariable Long id) {
+        Optional<Tarefa> tarefa = tarefaService.obterDadosDaTarefa(id);
 
-        if (projeto.isEmpty()) {
+        if (tarefa.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(projeto.get());
+        return ResponseEntity.ok(tarefa.get());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        Optional<Projeto> projeto = projetoService.obterDadosDoProjeto(id);
+        Optional<Tarefa> tarefa = tarefaService.obterDadosDaTarefa(id);
 
-        if (projeto.isEmpty()) {
+        if (tarefa.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        projetoService.excluirProjeto(id);
+        tarefaService.excluirTarefa(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Projeto> atualizar(@PathVariable Long id, @RequestBody Projeto dados) {
-        Optional<Projeto> projeto = projetoService.obterDadosDoProjeto(id);
+    public ResponseEntity<Tarefa> atualizar(@PathVariable Long id, @RequestBody Tarefa dados) {
+        Optional<Tarefa> tarefa = tarefaService.obterDadosDaTarefa(id);
 
-        if (projeto.isEmpty()) {
+        if (tarefa.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(projetoService.atualizarProjeto(id, dados));
+        return ResponseEntity.ok(tarefaService.atualizarTarefa(id, dados));
     }
     
 }
