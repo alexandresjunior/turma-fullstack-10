@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.treina.recife.sgp.api.dto.UsuarioDTO;
 import br.com.treina.recife.sgp.api.model.Usuario;
 import br.com.treina.recife.sgp.api.service.UsuarioService;
 
@@ -32,7 +33,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listar() {
+    public ResponseEntity<List<UsuarioDTO>> listar() {
         return ResponseEntity.ok(usuarioService.listarUsuarios());
     }
 
