@@ -1,7 +1,7 @@
 package br.com.treina.recife.sgp.api.controller;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +27,9 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) {
+    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody Usuario usuario) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(usuarioService.cadastrarUsuario(usuario));
+                             .body(usuarioService.cadastrarUsuario(usuario).toDTO());
     }
 
     @GetMapping
@@ -38,21 +38,21 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> obterDadosPeloId(@PathVariable Long id) {
-        Optional<Usuario> usuario = usuarioService.obterDadosDoUsuario(id);
+    public ResponseEntity<UsuarioDTO> obterDadosPeloId(@PathVariable Long id) {
+        UsuarioDTO usuario = usuarioService.obterDadosDoUsuario(id);
 
-        if (usuario.isEmpty()) {
+        if (Objects.isNull(usuario)) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(usuario.get());
+        return ResponseEntity.ok(usuario);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluir(@PathVariable Long id) {
-        Optional<Usuario> usuario = usuarioService.obterDadosDoUsuario(id);
+        UsuarioDTO usuario = usuarioService.obterDadosDoUsuario(id);
 
-        if (usuario.isEmpty()) {
+        if (Objects.isNull(usuario)) {
             return ResponseEntity.notFound().build();
         }
 
@@ -62,14 +62,14 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> atualizar(@PathVariable Long id, @RequestBody Usuario dados) {
-        Optional<Usuario> usuario = usuarioService.obterDadosDoUsuario(id);
+    public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody Usuario dados) {
+        UsuarioDTO usuario = usuarioService.obterDadosDoUsuario(id);
 
-        if (usuario.isEmpty()) {
+        if (Objects.isNull(usuario)) {
             return ResponseEntity.notFound().build();
         }
 
-        return ResponseEntity.ok(usuarioService.atualizarUsuario(id, dados));
+        return ResponseEntity.ok(usuarioService.atualizarUsuario(id, dados).toDTO());
     }
 
 }

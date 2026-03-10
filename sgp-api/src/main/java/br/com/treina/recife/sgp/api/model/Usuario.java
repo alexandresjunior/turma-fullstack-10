@@ -1,7 +1,9 @@
 package br.com.treina.recife.sgp.api.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
+import br.com.treina.recife.sgp.api.dto.UsuarioDTO;
 import br.com.treina.recife.sgp.api.enums.StatusUsuario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -47,5 +49,22 @@ public class Usuario {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusUsuario status;
+
+    public UsuarioDTO toDTO() {
+        Period periodo = Period.between(dataNascimento, LocalDate.now());
+
+        // Exemplo: 123.***.***-**
+        String cpfFormatado = cpf.substring(0, 3) + ".***.***-**";
+
+        return new UsuarioDTO(
+            id,
+            nome,
+            email,
+            cpfFormatado,
+            dataNascimento,
+            periodo.getYears(),
+            status
+        );
+    }
 
 }

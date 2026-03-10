@@ -10,6 +10,7 @@ public record UsuarioDTO(
     Long id,
     String nome,
     String email,
+    String cpf,
     @JsonFormat(pattern = "dd/MM/yyyy")
     LocalDate dataNascimento,
     Integer idade,
