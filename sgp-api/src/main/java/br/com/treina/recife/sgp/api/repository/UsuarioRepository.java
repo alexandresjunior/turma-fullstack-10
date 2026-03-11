@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import br.com.treina.recife.sgp.api.enums.StatusUsuario;
 import br.com.treina.recife.sgp.api.model.Usuario;
 import java.time.LocalDate;
 
@@ -19,7 +20,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByEmailAndSenha(String email, String senha);
 
-    List<Usuario> findByStatus(String status);
+    List<Usuario> findByStatus(StatusUsuario status);
 
     List<Usuario> findByDataNascimentoBetween(LocalDate dataInicio, LocalDate dataFim);
 
