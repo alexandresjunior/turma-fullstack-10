@@ -36,4 +36,9 @@ public class ProjetoService {
         projetoRepository.deleteById(id);
     }
 
+    // SELECT * FROM TB_PROJETOS WHERE usuario_resp_id = ?
+    public List<Projeto> listarProjetosDeUmUsuario(Long idUsuario) {
+        return projetoRepository.findByResponsavel_Id(idUsuario);
+    }
+
 }

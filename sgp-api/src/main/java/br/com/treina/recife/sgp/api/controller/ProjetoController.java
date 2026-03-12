@@ -1,6 +1,7 @@
 package br.com.treina.recife.sgp.api.controller;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.treina.recife.sgp.api.dto.UsuarioDTO;
 import br.com.treina.recife.sgp.api.model.Projeto;
 import br.com.treina.recife.sgp.api.service.ProjetoService;
+import br.com.treina.recife.sgp.api.service.UsuarioService;
 
 @RestController
 @RequestMapping("/api/projetos")
@@ -24,6 +27,9 @@ public class ProjetoController {
 
     @Autowired
     private ProjetoService projetoService;
+
+    @Autowired
+    private UsuarioService usuarioService;
 
     @PostMapping
     public ResponseEntity<Projeto> cadastrar(@RequestBody Projeto projeto) {
@@ -69,6 +75,18 @@ public class ProjetoController {
         }
 
         return ResponseEntity.ok(projetoService.atualizarProjeto(id, dados));
+    }
+
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<Projeto>> listarPeloResponsavel(@PathVariable("id") Long idUsuario) {
+        UsuarioDTO usuario = usuarioService.obterDadosDoUsuario(idUsuario);
+
+        if (Objects.isNull(usuario)) {
+            // TODO: Tratamento de Excecoes com Validacao com Campos de Entrada
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(projetoService.listarProjetosDeUmUsuario(idUsuario));
     }
     
 }

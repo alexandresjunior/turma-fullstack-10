@@ -56,4 +56,25 @@ public class UsuarioService {
         usuarioRepository.deleteById(id);
     }
     
+    // SELECT * FROM TB_USUARIOS WHERE CPF = ?
+    public UsuarioDTO buscarUsuarioPeloCPF(String cpf) {
+        Optional<Usuario> usuario = usuarioRepository.findByCpf(cpf);
+
+        if (usuario.isPresent()) {
+            return usuario.get().toDTO();
+        }
+
+        return null;
+    }
+
+    public UsuarioDTO buscarUsuarioPeloEmailSenha(String email, String senha) {
+        Optional<Usuario> usuario = usuarioRepository.findByEmailAndSenha(email, senha);
+
+        if (usuario.isPresent()) {
+            return usuario.get().toDTO();
+        }
+
+        return null;
+    }
+
 }
