@@ -1,4 +1,4 @@
-public class Titular {
+public class Titular implements Repositorio {
 
     private String nome;
     private String email;
@@ -31,6 +31,26 @@ public class Titular {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    @Override
+    public void cadastrar() {
+        System.out.println("Titular cadastrado com sucesso!");
+    }
+
+    @Override
+    public void atualizar() {
+        System.out.println("Titular atualizado com sucesso!");
+    }
+
+    @Override
+    public void deletar() {
+        System.out.println("Titular deletado com sucesso!");
+    }
+
+    @Override
+    public void listar() {
+        System.out.println("Titulares listados com sucesso!");
     }
 
 }

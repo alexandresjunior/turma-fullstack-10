@@ -19,4 +19,24 @@ public class ContaPoupanca extends Conta {
         this.depositar(this.getSaldo() * taxaRendimento);
     }
 
+    @Override
+    public void cadastrar() {
+        System.out.println("Conta poupança cadastrada com sucesso!");
+    }
+
+    @Override
+    public void atualizar() {
+        System.out.println("Conta poupança atualizada com sucesso!");
+    }
+
+    @Override
+    public void deletar() {
+        System.out.println("Conta poupança deletada com sucesso!");
+    }
+
+    @Override
+    public void listar() {
+        System.out.println("Contas poupanças listadas com sucesso!");
+    }
+
 }

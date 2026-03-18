@@ -1,4 +1,4 @@
-public abstract class Conta {
+public abstract class Conta implements Repositorio {
 
     private Long idBanco;
     private Long numAgencia;

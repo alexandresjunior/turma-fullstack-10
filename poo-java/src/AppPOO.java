@@ -30,6 +30,11 @@ public class AppPOO {
         
         System.out.println("Saldo da Conta #2 depois do saque: " + conta2.getSaldo());
 
+        // Comportamentos específicos de cada classe
+        conta1.cadastrar();
+        conta2.cadastrar();
+        titular1.cadastrar();
+
     }
     
 }

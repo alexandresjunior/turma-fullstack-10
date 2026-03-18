@@ -18,7 +18,7 @@ public class ContaCorrente extends Conta {
     @Override
     public boolean sacar(Double valor) {
         Double saldo = this.getSaldo();
-
+        
         if (valor <= saldo + limiteChequeEspecial) {
             this.setSaldo(saldo - valor);
             return true;
@@ -26,6 +26,26 @@ public class ContaCorrente extends Conta {
             System.out.println("Saldo indisponível para saque, incluindo o limite com cheque especial!");
             return false;
         }
+    }
+    
+    @Override
+    public void cadastrar() {
+        System.out.println("Conta corrente cadastrada com sucesso!");
+    }
+
+    @Override
+    public void atualizar() {
+        System.out.println("Conta corrente atualizada com sucesso!");
+    }
+
+    @Override
+    public void deletar() {
+        System.out.println("Conta corrente deletada com sucesso!");
+    }
+
+    @Override
+    public void listar() {
+        System.out.println("Contas correntes listadas com sucesso!");
     }
 
 }
