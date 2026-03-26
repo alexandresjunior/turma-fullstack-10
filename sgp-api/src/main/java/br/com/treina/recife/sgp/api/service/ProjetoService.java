@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.treina.recife.sgp.api.dto.DadosProjetoDTO;
 import br.com.treina.recife.sgp.api.model.Projeto;
 import br.com.treina.recife.sgp.api.repository.ProjetoRepository;
 
@@ -23,11 +24,12 @@ public class ProjetoService {
         return projetoRepository.findById(id);
     }
 
-    public Projeto cadastrarProjeto(Projeto projeto) {
-        return projetoRepository.save(projeto);
+    public Projeto cadastrarProjeto(DadosProjetoDTO projeto) {
+        return projetoRepository.save(projeto.toModel());
     }
 
-    public Projeto atualizarProjeto(Long id, Projeto projeto) {
+    public Projeto atualizarProjeto(Long id, DadosProjetoDTO dados) {
+        Projeto projeto = dados.toModel();
         projeto.setId(id);
         return projetoRepository.save(projeto);
     }

@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.treina.recife.sgp.api.dto.DadosProjetoDTO;
 import br.com.treina.recife.sgp.api.dto.UsuarioDTO;
 import br.com.treina.recife.sgp.api.model.Projeto;
 import br.com.treina.recife.sgp.api.service.ProjetoService;
 import br.com.treina.recife.sgp.api.service.UsuarioService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/projetos")
@@ -32,7 +34,7 @@ public class ProjetoController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Projeto> cadastrar(@RequestBody Projeto projeto) {
+    public ResponseEntity<Projeto> cadastrar(@Valid @RequestBody DadosProjetoDTO projeto) {
         return ResponseEntity.status(HttpStatus.CREATED)
                              .body(projetoService.cadastrarProjeto(projeto));
     }
@@ -67,7 +69,7 @@ public class ProjetoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Projeto> atualizar(@PathVariable Long id, @RequestBody Projeto dados) {
+    public ResponseEntity<Projeto> atualizar(@PathVariable Long id, @Valid @RequestBody DadosProjetoDTO dados) {
         Optional<Projeto> projeto = projetoService.obterDadosDoProjeto(id);
 
         if (projeto.isEmpty()) {

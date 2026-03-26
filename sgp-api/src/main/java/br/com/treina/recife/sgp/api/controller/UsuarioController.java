@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.treina.recife.sgp.api.dto.CredenciaisDTO;
+import br.com.treina.recife.sgp.api.dto.DadosUsuarioDTO;
 import br.com.treina.recife.sgp.api.dto.UsuarioDTO;
 import br.com.treina.recife.sgp.api.model.Usuario;
 import br.com.treina.recife.sgp.api.service.UsuarioService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -29,9 +31,12 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> cadastrar(@RequestBody Usuario usuario) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(usuarioService.cadastrarUsuario(usuario).toDTO());
+    public ResponseEntity<UsuarioDTO> cadastrar(@Valid @RequestBody DadosUsuarioDTO usuario) {
+        Usuario usuarioCadastrado = usuarioService.cadastrarUsuario(usuario);
+
+        UsuarioDTO usuarioDTO = usuarioCadastrado.toDTO();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioDTO);
     }
 
     @GetMapping
@@ -64,7 +69,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @RequestBody Usuario dados) {
+    public ResponseEntity<UsuarioDTO> atualizar(@PathVariable Long id, @Valid @RequestBody DadosUsuarioDTO dados) {
         UsuarioDTO usuario = usuarioService.obterDadosDoUsuario(id);
 
         if (Objects.isNull(usuario)) {

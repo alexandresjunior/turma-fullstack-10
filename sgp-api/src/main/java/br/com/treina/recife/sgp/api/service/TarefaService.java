@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.treina.recife.sgp.api.dto.DadosTarefaDTO;
 import br.com.treina.recife.sgp.api.model.Tarefa;
 import br.com.treina.recife.sgp.api.repository.TarefaRepository;
 
@@ -23,11 +24,12 @@ public class TarefaService {
         return tarefaRepository.findById(id);
     }
 
-    public Tarefa cadastrarTarefa(Tarefa tarefa) {
-        return tarefaRepository.save(tarefa);
+    public Tarefa cadastrarTarefa(DadosTarefaDTO tarefa) {
+        return tarefaRepository.save(tarefa.toModel());
     }
 
-    public Tarefa atualizarTarefa(Long id, Tarefa tarefa) {
+    public Tarefa atualizarTarefa(Long id, DadosTarefaDTO dados) {
+        Tarefa tarefa = dados.toModel();
         tarefa.setId(id);
         return tarefaRepository.save(tarefa);
     }

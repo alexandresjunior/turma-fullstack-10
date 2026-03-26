@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.treina.recife.sgp.api.dto.DadosTarefaDTO;
 import br.com.treina.recife.sgp.api.model.Tarefa;
 import br.com.treina.recife.sgp.api.service.TarefaService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tarefas")
@@ -26,9 +28,20 @@ public class TarefaController {
     private TarefaService tarefaService;
 
     @PostMapping
-    public ResponseEntity<Tarefa> cadastrar(@RequestBody Tarefa tarefa) {
+    public ResponseEntity<Tarefa> cadastrar(@Valid @RequestBody DadosTarefaDTO tarefa) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                             .body(tarefaService.cadastrarTarefa(tarefa));
+                        .body(tarefaService.cadastrarTarefa(tarefa));
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Tarefa> atualizar(@PathVariable Long id, @Valid @RequestBody DadosTarefaDTO dados) {
+        Optional<Tarefa> tarefa = tarefaService.obterDadosDaTarefa(id);
+
+        if (tarefa.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(tarefaService.atualizarTarefa(id, dados));
     }
 
     @GetMapping
@@ -60,15 +73,5 @@ public class TarefaController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Tarefa> atualizar(@PathVariable Long id, @RequestBody Tarefa dados) {
-        Optional<Tarefa> tarefa = tarefaService.obterDadosDaTarefa(id);
-
-        if (tarefa.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(tarefaService.atualizarTarefa(id, dados));
-    }
     
 }

@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.treina.recife.sgp.api.dto.DadosUsuarioDTO;
 import br.com.treina.recife.sgp.api.dto.UsuarioDTO;
 import br.com.treina.recife.sgp.api.model.Usuario;
 import br.com.treina.recife.sgp.api.repository.UsuarioRepository;
@@ -41,13 +43,14 @@ public class UsuarioService {
     }
 
     // INSERT INTO TB_USUARIOS ...
-    public Usuario cadastrarUsuario(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+    public Usuario cadastrarUsuario(DadosUsuarioDTO usuario) {
+        return usuarioRepository.save(usuario.toModel());
     }
 
     // UPDATE TB_USUARIOS ... WHERE ID = ?
-    public Usuario atualizarUsuario(Long id, Usuario usuario) {
-        usuario.setId(id);
+    public Usuario atualizarUsuario(Long id, DadosUsuarioDTO dados) {
+        Usuario usuario = dados.toModel();
+        usuario.setId(id);  // Garante que o usuário vai ser atualizado e não criado um novo!
         return usuarioRepository.save(usuario);
     }
 
